@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блиц — быстрые шахматы онлайн без регистрации</title>
+  <meta name="description" content="Быстрые шахматы в браузере: партия за 1–10 минут, часы с добавлением времени, три уровня соперника. Без регистрации и установки.">
+  <meta property="og:title" content="Блиц — быстрые шахматы онлайн">
+  <meta property="og:description" content="Партия за 3 минуты: выбери контроль времени и начинай играть прямо на странице.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0c110e">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%238ee26b'/><text x='16' y='25' font-size='22' font-family='Arial' text-anchor='middle' fill='%230c110e'>♞</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="#top" class="logo" aria-label="Блиц">
+    <span class="logo-mark">♞&#xFE0E;</span><span class="logo-text">Блиц</span>
+  </a>
+  <nav class="nav-links" aria-label="Разделы">
+    <a href="#modes">Режимы</a>
+    <a href="#how">Как играть</a>
+    <a href="#features">Возможности</a>
+    <a href="#faq">Вопросы</a>
+  </nav>
+  <a class="btn btn-small" href="#play" data-go-play>Играть</a>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <span class="eyebrow"><i class="pulse"></i> Партия за 3 минуты</span>
+      <h1>Быстрые шахматы <em>без регистрации</em></h1>
+      <p class="lead">
+        Выбери время, сделай первый ход — и играй. Никаких аккаунтов, загрузок и ожидания соперника:
+        партия начинается сразу, прямо на этой странице.
+      </p>
+      <div class="hero-actions">
+        <a href="#play" class="btn btn-big" data-go-play>Играть сейчас</a>
+        <a href="#modes" class="btn btn-ghost btn-big">Выбрать режим</a>
+      </div>
+      <ul class="hero-facts">
+        <li><b>0</b> регистраций</li>
+        <li><b>1–10</b> минут на партию</li>
+        <li><b>3</b> уровня соперника</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-glow"></div>
+      <div class="clock-chip chip-top"><span>Компьютер</span><b>2:41</b></div>
+      <div class="board-tilt">
+        <div class="board preview" id="heroBoard"></div>
+      </div>
+      <div class="clock-chip chip-bottom active"><span>Вы</span><b>2:58</b></div>
+    </div>
+  </section>
+
+  <!-- Режимы -->
+  <section class="section" id="modes">
+    <div class="section-head reveal">
+      <span class="kicker">Режимы</span>
+      <h2>Сколько у тебя времени?</h2>
+      <p>Нажми на карточку — часы выставятся сами, а доска откроется ниже.</p>
+    </div>
+    <div class="modes">
+      <button type="button" class="mode reveal" data-mode="1+0" aria-pressed="false">
+        <span class="mode-time">1<small>мин</small></span>
+        <span class="mode-name">Пуля</span>
+        <span class="mode-desc">Одна минута на всё. Играй на скорости, а не на размышлениях.</span>
+      </button>
+      <button type="button" class="mode reveal" data-mode="3+2" aria-pressed="true">
+        <span class="mode-badge">Популярный</span>
+        <span class="mode-time">3<small>+2 сек</small></span>
+        <span class="mode-name">Блиц</span>
+        <span class="mode-desc">Три минуты и две секунды за каждый ход. Классика быстрых шахмат.</span>
+      </button>
+      <button type="button" class="mode reveal" data-mode="5+0" aria-pressed="false">
+        <span class="mode-time">5<small>мин</small></span>
+        <span class="mode-name">Блиц-5</span>
+        <span class="mode-desc">Пять минут: хватит и на план, и на красивую комбинацию.</span>
+      </button>
+      <button type="button" class="mode reveal" data-mode="10+0" aria-pressed="false">
+        <span class="mode-time">10<small>мин</small></span>
+        <span class="mode-name">Рапид</span>
+        <span class="mode-desc">Десять минут для спокойной партии, когда спешить некуда.</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Игра -->
+  <section class="section play-section" id="play">
+    <div class="section-head reveal">
+      <span class="kicker">Игра</span>
+      <h2>Доска уже готова</h2>
+      <p>Нажми на фигуру, потом на подсвеченную клетку. Часы запустятся после первого хода белых.</p>
+    </div>
+
+    <div class="settings reveal">
+      <label>Время
+        <select id="tc">
+          <option value="1+0">1 мин</option>
+          <option value="3+2" selected>3 + 2</option>
+          <option value="5+0">5 мин</option>
+          <option value="10+0">10 мин</option>
+        </select>
+      </label>
+      <label>Соперник
+        <select id="level">
+          <option value="easy">Новичок</option>
+          <option value="medium" selected>Любитель</option>
+          <option value="hard">Сильный</option>
+        </select>
+      </label>
+      <label>Цвет
+        <select id="color">
+          <option value="w" selected>Белые</option>
+          <option value="b">Чёрные</option>
+          <option value="r">Случайно</option>
+        </select>
+      </label>
+      <button type="button" class="btn" id="newGame">Новая партия</button>
+    </div>
+
+    <div class="play reveal">
+      <div class="table">
+        <div class="player-bar top">
+          <span class="player-name" id="nameTop"></span>
+          <span class="clock" id="clockTop">3:00</span>
+        </div>
+
+        <div class="board-wrap">
+          <div class="board" id="board" role="grid" aria-label="Шахматная доска"></div>
+
+          <div class="overlay" id="overlay" hidden>
+            <div class="overlay-card">
+              <h3 id="overlayTitle"></h3>
+              <p id="overlayText"></p>
+              <button type="button" class="btn" id="overlayNew">Сыграть ещё</button>
+            </div>
+          </div>
+
+          <div class="overlay" id="promo" hidden>
+            <div class="overlay-card">
+              <h3>Превращение пешки</h3>
+              <div class="promo-choices" id="promoChoices"></div>
+              <button type="button" class="btn btn-ghost btn-small" id="promoCancel">Отмена</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="player-bar bottom">
+          <span class="player-name" id="nameBottom"></span>
+          <span class="clock" id="clockBottom">3:00</span>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="status" id="status" role="status" aria-live="polite">Ваш ход</div>
+        <div class="moves-box">
+          <h3>Ходы</h3>
+          <ol class="moves" id="moves"></ol>
+        </div>
+        <div class="controls">
+          <button type="button" class="btn btn-ghost btn-small" id="undo">↶ Отменить ход</button>
+          <button type="button" class="btn btn-ghost btn-small" id="flip">⇅ Перевернуть</button>
+          <button type="button" class="btn btn-ghost btn-small danger" id="resign">⚑ Сдаться</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Как играть -->
+  <section class="section" id="how">
+    <div class="section-head reveal">
+      <span class="kicker">Как это работает</span>
+      <h2>Три шага до первого хода</h2>
+    </div>
+    <div class="steps">
+      <article class="step reveal">
+        <span class="step-num">01</span>
+        <h3>Выбери время</h3>
+        <p>От минуты до десяти. Для первой партии подойдёт блиц 3+2: две секунды за ход не дадут проиграть по времени в выигранной позиции.</p>
+      </article>
+      <article class="step reveal">
+        <span class="step-num">02</span>
+        <h3>Определи соперника</h3>
+        <p>Новичок иногда ошибается, любитель играет ровно, сильный считает на три хода вперёд и наказывает за зевки.</p>
+      </article>
+      <article class="step reveal">
+        <span class="step-num">03</span>
+        <h3>Играй</h3>
+        <p>Нажимай на фигуры, следи за часами и записью ходов. Ошибся — отмени ход. Партия закончилась — сразу начни новую.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Возможности -->
+  <section class="section" id="features">
+    <div class="section-head reveal">
+      <span class="kicker">Возможности</span>
+      <h2>Всё, что нужно для быстрой партии</h2>
+    </div>
+    <div class="features">
+      <div class="feature reveal"><b>♜</b><h3>Полные правила</h3><p>Рокировка, взятие на проходе, превращение пешки, шах, мат и пат. Ничьи по повторению и правилу 50 ходов.</p></div>
+      <div class="feature reveal"><b>⏱</b><h3>Настоящие часы</h3><p>Время идёт у того, чей ход. Добавление за ход, подсветка последних секунд и поражение по флагу.</p></div>
+      <div class="feature reveal"><b>↶</b><h3>Отмена хода</h3><p>Зевнул ферзя? Верни ход назад и сыграй иначе. Тренировочная партия — не турнир.</p></div>
+      <div class="feature reveal"><b>♟</b><h3>Запись партии</h3><p>Каждый ход попадает в список в стандартной нотации: Nf3, exd5, O-O, e8=Q#.</p></div>
+      <div class="feature reveal"><b>⚙</b><h3>Три уровня</h3><p>Компьютер считает варианты с альфа-бета отсечением. Выбирай силу под свою форму.</p></div>
+      <div class="feature reveal"><b>▤</b><h3>Работает везде</h3><p>Телефон, планшет, ноутбук. Без установки и регистрации, внешних библиотек и серверов.</p></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq-section" id="faq">
+    <div class="section-head reveal">
+      <span class="kicker">Вопросы</span>
+      <h2>Коротко о главном</h2>
+    </div>
+    <div class="faq reveal">
+      <details>
+        <summary>Нужно ли регистрироваться?</summary>
+        <p>Нет. Открыл страницу, выбрал время и играешь. Партии нигде не сохраняются, поэтому и аккаунт не нужен.</p>
+      </details>
+      <details>
+        <summary>С кем я играю?</summary>
+        <p>С компьютером, который работает прямо в браузере. Три уровня силы помогут и тем, кто только выучил ходы, и тем, кто хочет размяться перед турниром.</p>
+      </details>
+      <details>
+        <summary>Что будет, если у меня закончится время?</summary>
+        <p>Партия завершится поражением по времени. Чтобы не спешить, выбери режим с добавлением секунд за ход или рапид на 10 минут.</p>
+      </details>
+      <details>
+        <summary>Часы идут, пока думает компьютер?</summary>
+        <p>Да, как в настоящей партии: у каждого игрока свои часы, они переключаются после хода.</p>
+      </details>
+      <details>
+        <summary>Можно ли играть с телефона?</summary>
+        <p>Да. Доска подстраивается под ширину экрана, фигуры выбираются касанием, а страница не прокручивается вбок.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Финал -->
+  <section class="section final reveal">
+    <h2>Ход белых. <em>Что играешь?</em></h2>
+    <a href="#play" class="btn btn-big" data-go-play>Начать партию</a>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© 2026 Блиц · демо-проект</span>
+  <span>Сделано на HTML, CSS и JavaScript</span>
+</footer>
+
+<script src="app.js?v=1"></script>
+</body>
+</html>
